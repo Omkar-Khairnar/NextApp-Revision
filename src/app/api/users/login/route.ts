@@ -21,7 +21,7 @@ export async function POST(req : NextRequest) {
         //Check if password is correct
         const validatePassword = await bcryptjs.compare(password, user.password);
         if(!validatePassword){
-            return NextResponse.json({error:true, msg:"Invalid Credentials"}, {status:400})
+            return NextResponse.json({error:true, msg:"Invalid Credentials"})
         }
         // console.log('password validated');
         

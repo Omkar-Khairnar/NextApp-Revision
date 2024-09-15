@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import Link from 'next/link';
-import React, { use, useState } from 'react';
-import Loader from '../loader/page'
+import React, { useState } from 'react';
+import Loader from '../loader/page';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
@@ -12,32 +12,30 @@ const LoginPage = () => {
     email: "",
     password: ""
   };
-  const [user, setUser] = useState(initialData)
+  const [user, setUser] = useState(initialData);
   const [loading, setLoading] = useState(false);
 
   const onLogin = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await axios.post('/api/users/login', user);
       const data = response.data;
       if (!data.error) {
-        toast.success(data.msg)
-        router.push('/profile')
+        toast.success(data.msg);
+        router.push('/profile');
+      } else {
+        setUser(initialData);
+        toast.error(data.msg);
       }
-      else {
-        setUser(initialData)
-        toast.error(data.msg)
-      }
-
     } catch (error: any) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-    finally {
-      setLoading(false)
-    }
-  }
+  };
+
   return (
     <>
       {
@@ -78,16 +76,24 @@ const LoginPage = () => {
                   Login
                 </button>
               </form>
-              <p className="text-center text-gray-600">
-                Dont have  account?{" "}
-                <Link href="/signup" className="text-blue-500 hover:underline">Sign Up</Link>
-              </p>
+
+              <div className="flex justify-between text-sm mt-4">
+                <p className="text-gray-600">
+                  Don't have an account?{" "}
+                  <Link href="/signup" className="text-blue-500 hover:underline">
+                    Sign Up
+                  </Link>
+                </p>
+                <Link href="/forgotpassword" className="text-blue-500 hover:underline">
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
           </div>
         )
       }
     </>
-  )
-}
+  );
+};
 
 export default LoginPage;

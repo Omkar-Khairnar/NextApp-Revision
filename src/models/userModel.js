@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
         default:false
     },
     isAdmin:{
-        type:Boolean,
+        type:Boolean, 
         default:false
     },
     forgotPasswordToken:String,
